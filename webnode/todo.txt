@@ -1,0 +1,12 @@
+docker build -t diegopansica/webnode:1.0.0 --rm --no-cache=true .
+
+docker run -d -p 8888:8080 diegopansica/webnode:1.0.0 
+
+docker login --username=diegopansica (QFnUFuTanryQSW4)
+
+docker push diegopansica/webnode:1.0.0
+
+docker exec -it 5a1addde5ae1 sh init.sh
+
+
+

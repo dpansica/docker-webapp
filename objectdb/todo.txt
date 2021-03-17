@@ -1,0 +1,9 @@
+docker build -t diegopansica/objectdb:2.8.4 --rm --no-cache=true .
+
+docker run -d -p 6136:6136 diegopansica/objectdb:2.8.4 
+
+docker login --username=diegopansica (QFnUFuTanryQSW4)
+
+docker push diegopansica/objectdb:2.8.4
+
+
