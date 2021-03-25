@@ -1,19 +1,40 @@
-#!/bin/sh
+#!/bin/bash
 
-#https://a1e0be1239c0d61b656f71ef86b60686b0544f05:x-oauth-basic@github.com/dpansica/
+if [ ! -v "CONTEXT_PATH" ]
+then
+      CONTEXT_PATH=\\/archetype\\/
+fi
 
+if [ ! -v "DEPLOY_URL" ]
+then
+      DEPLOY_URL=http:\\/\\/localhost:8080
+fi
 
-set CONTEXT_PATH=/archetype/
-set DEPLOY_URL=http://localhost:8080
+if [ ! -v "OBJECTDB_URL" ]
+then
+      OBJECTDB_URL=objectdb:\\/\\/localhost:6136\\/$CONTEXT_PATH.odb
+fi
 
-git clone $0$1
+if [ ! -v "OBJECTDB_USER" ]
+then
+      OBJECTDB_USER=admin
+fi
 
-cd $1
+if [ ! -v "OBJECTDB_PASSWORD" ]
+then
+      OBJECTDB_PASSWORD=admin
+fi
+
+git clone $1$2
+
+cd $2
+
+sed -i "s/https:\/\/www.punto61caffetteria.it\//$DEPLOY_URL\//" ./src/main/frontend/src/environments/environment.prod.ts
 
 chmod u+x ./src/main/frontend/build-by-env.sh
 
 mvn clean install -Dspring-boot.run.profiles=bashparam
 
-cp target/$1.war /usr/local/tomcat/webapps/
+cp target/$2.war /usr/local/tomcat/webapps/
 
 

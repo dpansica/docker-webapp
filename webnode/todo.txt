@@ -8,5 +8,5 @@ docker push diegopansica/webnode:1.0.0
 
 docker exec -it 5a1addde5ae1 sh init.sh https://a1e0be1239c0d61b656f71ef86b60686b0544f05:x-oauth-basic@github.com/dpansica/ archetype
 
-
+https://a1e0be1239c0d61b656f71ef86b60686b0544f05:x-oauth-basic@github.com/dpansica/archetype
 
