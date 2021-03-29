@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  webnode:
+    build: .
+    image: "diegopansica/webnode:1.0.0"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./webnode:/home/app/archetype
+    environment:
+     - CONTEXT_PATH=\\/archetype\\/
+     - DEPLOY_URL=http:\\/\\/www.test.it
+     - OBJECTDB_URL=objectdb:\\/\\/database:6136\\/archetype.odb
+     - OBJECTDB_USER=admin
+     - OBJECTDB_PASSWORD=admin
+    depends_on: 
+    - database  
+  database:
+    image: "diegopansica/objectdb:2.8.4"
+    volumes:
+      - ./database:/home/app/objectdb-2.8.4/db
+    environment:
+     - OBJECTDB_PASSWORD=password
+    
