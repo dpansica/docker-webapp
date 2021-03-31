@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webnode
+  labels:
+    app: cms-objectdb
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: cms-objectdb
+    tier: frontend
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: webnode-pv-storage
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: webnode-pv-claim
+  labels:
+    app: cms-objectdb
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webnode
+  labels:
+    app: cms-objectdb
+spec:
+  selector:
+    matchLabels:
+      app: cms-objectdb
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: cms-objectdb
+        tier: frontend
+    spec:
+      containers:
+      - image: diegopansica/webnode:1.0.0
+        name: webnode
+        env:
+        - name: OBJECTDB_URL
+          value: objectdb:\\/\\/object-database:6136\\/$CONTEXT_PATH.odb
+        - name: OBJECTDB_USER
+          value: admin
+        - name: OBJECTDB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: objectdb-pass
+              key: password
+        - name: CONTEXT_PATH
+          value: \\/archetype\\/
+        - name: DEPLOY_URL
+          value: http:\\/\\/www.test.it
+              
+        ports:
+        - containerPort: 8080
+          name: cms
+        volumeMounts:
+        - name: webnode-pv-storage
+          mountPath: /var/lib/tomcat/webapps
+      volumes:
+      - name: webnode-pv-storage
+        persistentVolumeClaim:
+          claimName: webnode-pv-claim

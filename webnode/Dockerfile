@@ -2,7 +2,12 @@ FROM tomcat:9.0
 RUN apt-get update && apt-get install -y \
 	git \
 	maven \
-	vim
+	jq \
+	apache2
+
+RUN a2enmod proxy && a2enmod proxy_http && a2enmod proxy_balancer && a2enmod lbmethod_byrequests
+
+COPY archetype.conf /etc/apache2/sites-enabled/
 
 RUN mkdir -p /home/app
 

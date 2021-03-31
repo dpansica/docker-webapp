@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: object-database
+  labels:
+    app: cms-objectdb
+spec:
+  ports:
+    - port: 6136
+  selector:
+    app: cms-objectdb
+    tier: database
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: odb-pv-storage
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: odb-pv-claim
+  labels:
+    app: cms-objectdb
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odb
+  labels:
+    app: cms-objectdb
+spec:
+  selector:
+    matchLabels:
+      app: cms-objectdb
+      tier: database
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: cms-objectdb
+        tier: database
+    spec:
+      containers:
+      - image: diegopansica/odb:1.0.0
+        name: odb
+        env:
+        - name: OBJECTDB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: objectdb-pass
+              key: password
+        ports:
+        - containerPort: 6136
+          name: objectdb
+        volumeMounts:
+        - name: odb-pv-storage
+          mountPath: /home/app/objectdb-2.8.4
+      volumes:
+      - name: odb-pv-storage
+        persistentVolumeClaim:
+          claimName: odb-pv-claim

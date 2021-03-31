@@ -1,0 +1,7 @@
+secretGenerator:
+- name: objectdb-pass
+  literals:
+  - password=admin
+resources:
+  - objectdb-deployment.yaml
+  - webapp-deployment.yaml

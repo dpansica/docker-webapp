@@ -4,12 +4,12 @@ services:
     build: .
     image: "diegopansica/webnode:1.0.0"
     ports:
-      - "8080:8080"
+      - "80:80"
     volumes:
       - ./webnode:/home/app/archetype
     environment:
      - CONTEXT_PATH=\\/archetype\\/
-     - DEPLOY_URL=http:\\/\\/www.test.it
+     - DEPLOY_URL=http:\/\/www.test.it\/
      - OBJECTDB_URL=objectdb:\\/\\/database:6136\\/archetype.odb
      - OBJECTDB_USER=admin
      - OBJECTDB_PASSWORD=admin

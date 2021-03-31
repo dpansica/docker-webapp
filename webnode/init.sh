@@ -29,7 +29,10 @@ git clone $1$2
 
 cd $2
 
-sed -i "s/https:\/\/www.punto61caffetteria.it\//$DEPLOY_URL\//" ./src/main/frontend/src/environments/environment.prod.ts
+sed -i "s/https:\/\/www.punto61caffetteria.it\//$DEPLOY_URL/" ./src/main/frontend/src/environments/environment.prod.ts
+
+sed -i "s/www.punto61caffetteria.it/$DEPLOY_URL/" ./etc/apache2/sites-enabled/archetype.conf
+sed -i "s/archetype/$CONTEXT_PATH/" ./etc/apache2/sites-enabled/archetype.conf
 
 chmod u+x ./src/main/frontend/build-by-env.sh
 

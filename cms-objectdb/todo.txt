@@ -1,0 +1,9 @@
+minikube start
+
+minikube dashboard
+
+minikube service wordpress
+
+kubectl apply -k ./
+
+kubectl delete -k ./
