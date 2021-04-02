@@ -4,7 +4,7 @@ services:
     build: .
     image: "diegopansica/webnode:1.0.0"
     ports:
-      - "80:80"
+      - "80:8080"
     volumes:
       - ./webnode:/home/app/archetype
     environment:

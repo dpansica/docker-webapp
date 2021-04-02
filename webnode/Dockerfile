@@ -1,13 +1,5 @@
 FROM tomcat:9.0
-RUN apt-get update && apt-get install -y \
-	git \
-	maven \
-	jq \
-	apache2
-
-RUN a2enmod proxy && a2enmod proxy_http && a2enmod proxy_balancer && a2enmod lbmethod_byrequests
-
-COPY archetype.conf /etc/apache2/sites-enabled/
+RUN apt-get update && apt-get install -y
 
 RUN mkdir -p /home/app
 
@@ -20,6 +12,8 @@ RUN chgrp app /usr/local/tomcat/webapps
 RUN chmod g+rwx /usr/local/tomcat/webapps
 
 COPY init.sh /home/app
+
+COPY archetype.war /usr/local/tomcat/webapps
 
 RUN chown -R app:app $HOME
 
