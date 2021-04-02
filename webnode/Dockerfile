@@ -1,5 +1,5 @@
 FROM tomcat:9.0
-RUN apt-get update && apt-get install -y
+RUN apt-get update && apt-get install -y 
 
 RUN mkdir -p /home/app
 
@@ -13,7 +13,7 @@ RUN chmod g+rwx /usr/local/tomcat/webapps
 
 COPY init.sh /home/app
 
-COPY archetype.war /usr/local/tomcat/webapps
+COPY ROOT.war /usr/local/tomcat/webapps
 
 RUN chown -R app:app $HOME
 

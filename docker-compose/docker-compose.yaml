@@ -6,11 +6,9 @@ services:
     ports:
       - "80:8080"
     volumes:
-      - ./webnode:/home/app/archetype
+      - ./webnode:/usr/local/tomcat/webapps
     environment:
-     - CONTEXT_PATH=\\/archetype\\/
-     - DEPLOY_URL=http:\/\/www.test.it\/
-     - OBJECTDB_URL=objectdb:\\/\\/database:6136\\/archetype.odb
+     - OBJECTDB_URL=objectdb://database:6136/archetype.odb
      - OBJECTDB_USER=admin
      - OBJECTDB_PASSWORD=admin
     depends_on: 
