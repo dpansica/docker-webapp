@@ -5,7 +5,7 @@ services:
     ports:
       - "80:8080"
     volumes:
-      - ./webnode:/usr/local/tomcat/logs
+      - ./webnode:/tmp/container-data
     environment:
      - OBJECTDB_URL=objectdb://database:6136/archetype.odb
      - OBJECTDB_USER=admin
@@ -17,7 +17,7 @@ services:
     expose: 
       - "6136"
     volumes:
-      - ./database:/home/app/objectdb-2.8.4/db
+      - ./database:/tmp/container-data
     environment:
      - OBJECTDB_PASSWORD=password
 
