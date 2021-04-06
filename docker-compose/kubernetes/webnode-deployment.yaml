@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\pansica\docker-docs\docker-webapp\docker-compose\kompose.exe
+      convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webnode
+  name: webnode
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: webnode
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\pansica\docker-docs\docker-webapp\docker-compose\kompose.exe
+          convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: webnode
+    spec:
+      containers:
+      - env:
+        - name: OBJECTDB_PASSWORD
+          value: admin
+        - name: OBJECTDB_URL
+          value: objectdb://database:6136/archetype.odb
+        - name: OBJECTDB_USER
+          value: admin
+        image: diegopansica/webnode:1.0.0
+        imagePullPolicy: ""
+        name: webnode
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

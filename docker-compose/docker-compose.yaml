@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 services:
   webnode:
     image: "diegopansica/webnode:1.0.0"

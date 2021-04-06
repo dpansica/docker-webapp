@@ -5,3 +5,9 @@ docker-compose stop
 docker-compose.exe exec webnode bash
 
 ./init.sh https://a1e0be1239c0d61b656f71ef86b60686b0544f05:x-oauth-basic@github.com/dpansica/ archetype
+
+kompose convert
+
+kubectl apply -k ./
+
+kubectl delete -k ./

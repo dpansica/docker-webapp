@@ -1,0 +1,5 @@
+resources:
+  - database-service.yaml
+  - database-deployment.yaml
+  - webnode-service.yaml
+  - webnode-deployment.yaml

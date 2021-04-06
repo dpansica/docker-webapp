@@ -1,0 +1,23 @@
+version: "3"
+services:
+  webnode:
+    image: "diegopansica/webnode:1.0.0"
+    ports:
+      - "80:8080"
+    volumes:
+      - ./webnode:/tmp/container-data
+    environment:
+     - OBJECTDB_URL=objectdb://database:6136/archetype.odb
+     - OBJECTDB_USER=admin
+     - OBJECTDB_PASSWORD=admin
+    depends_on: 
+    - database  
+  database:
+    image: "diegopansica/objectdb:2.8.4"
+    expose: 
+      - "6136"
+    volumes:
+      - ./database:/tmp/container-data
+    environment:
+     - OBJECTDB_PASSWORD=password
+
