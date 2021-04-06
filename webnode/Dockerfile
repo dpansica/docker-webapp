@@ -1,5 +1,6 @@
 FROM tomcat:9.0
-RUN apt-get update && apt-get install -y 
+
+#RUN apt-get update && apt-get install -y 
 
 RUN mkdir -p /home/app
 
@@ -9,7 +10,7 @@ RUN groupadd -r app && useradd -r -g app -d /home/app -s /sbin/nologin -c "Docke
 
 RUN chgrp app /usr/local/tomcat/webapps
 
-RUN chmod g+rwx /usr/local/tomcat/webapps
+RUN chmod -R g+rwx /usr/local/tomcat
 
 COPY init.sh /home/app
 

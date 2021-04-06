@@ -1,12 +1,11 @@
 version: "3.9"
 services:
   webnode:
-    build: .
     image: "diegopansica/webnode:1.0.0"
     ports:
       - "80:8080"
     volumes:
-      - ./webnode:/usr/local/tomcat/webapps
+      - ./webnode:/usr/local/tomcat/logs
     environment:
      - OBJECTDB_URL=objectdb://database:6136/archetype.odb
      - OBJECTDB_USER=admin
@@ -15,8 +14,10 @@ services:
     - database  
   database:
     image: "diegopansica/objectdb:2.8.4"
+    expose: 
+      - "6136"
     volumes:
       - ./database:/home/app/objectdb-2.8.4/db
     environment:
      - OBJECTDB_PASSWORD=password
-    
+
