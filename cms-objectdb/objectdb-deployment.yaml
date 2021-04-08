@@ -15,7 +15,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: odb-pv-storage
+  name: objectdb-pv-storage
   labels:
     type: local
 spec:
@@ -30,7 +30,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odb-pv-claim
+  name: objectdb-pv-claim
   labels:
     app: cms-objectdb
 spec:
@@ -61,8 +61,8 @@ spec:
         tier: database
     spec:
       containers:
-      - image: diegopansica/odb:1.0.0
-        name: odb
+      - image: diegopansica/objectdb:2.8.4
+        name: objectdb
         env:
         - name: OBJECTDB_PASSWORD
           valueFrom:
@@ -73,9 +73,9 @@ spec:
         - containerPort: 6136
           name: objectdb
         volumeMounts:
-        - name: odb-pv-storage
-          mountPath: /home/app/objectdb-2.8.4
+        - name: objectdb-pv-storage
+          mountPath: /tmp/container-data
       volumes:
-      - name: odb-pv-storage
+      - name: objectdb-pv-storage
         persistentVolumeClaim:
-          claimName: odb-pv-claim
+          claimName: objectdb-pv-claim

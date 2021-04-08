@@ -64,7 +64,7 @@ spec:
         name: webnode
         env:
         - name: OBJECTDB_URL
-          value: objectdb:\\/\\/object-database:6136\\/$CONTEXT_PATH.odb
+          value: objectdb://database:6136/archetype.odb
         - name: OBJECTDB_USER
           value: admin
         - name: OBJECTDB_PASSWORD
@@ -72,17 +72,12 @@ spec:
             secretKeyRef:
               name: objectdb-pass
               key: password
-        - name: CONTEXT_PATH
-          value: \\/archetype\\/
-        - name: DEPLOY_URL
-          value: http:\\/\\/www.test.it
-              
         ports:
         - containerPort: 8080
           name: cms
         volumeMounts:
         - name: webnode-pv-storage
-          mountPath: /var/lib/tomcat/webapps
+          mountPath: /tmp/container-data
       volumes:
       - name: webnode-pv-storage
         persistentVolumeClaim:
