@@ -23,9 +23,9 @@ spec:
   capacity:
     storage: 20Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadOnlyMany
   hostPath:
-    path: "/mnt/data"  
+    path: "/var/log"  
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -35,7 +35,7 @@ metadata:
     app: cms-objectdb
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadOnlyMany
   resources:
     requests:
       storage: 20Gi
@@ -64,7 +64,7 @@ spec:
         name: webnode
         env:
         - name: OBJECTDB_URL
-          value: objectdb://database:6136/archetype.odb
+          value: objectdb://object-database.default.svc.cluster.local:6136/archetype.odb
         - name: OBJECTDB_USER
           value: admin
         - name: OBJECTDB_PASSWORD

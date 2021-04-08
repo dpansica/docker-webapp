@@ -23,9 +23,9 @@ spec:
   capacity:
     storage: 20Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadOnlyMany
   hostPath:
-    path: "/mnt/data"  
+    path: "/var/log"  
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -36,7 +36,7 @@ metadata:
 spec:
   storageClassName: manual
   accessModes:
-    - ReadWriteOnce
+    - ReadOnlyMany
   resources:
     requests:
       storage: 20Gi
